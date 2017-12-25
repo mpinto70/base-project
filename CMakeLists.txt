@@ -6,7 +6,13 @@ project (PROJECT_NAME_GOES_HERE)
 enable_testing()
 include(CTest)
 
-set(CMAKE_CXX_FLAGS "-Werror -Wall -O3 -finline-functions -std=c++14 -Wno-unused-local-typedefs")
+set(CMAKE_CXX_FLAGS "-Werror \
+    -Wall \
+    -O2 \
+    -finline-functions \
+    -std=c++14 \
+    -Wno-unused-local-typedefs \
+    -D PROJECT_DIR=\"\\\"${CMAKE_SOURCE_DIR}\\\"\"")
 
 #set (CMAKE_VERBOSE_MAKEFILE on)
 
