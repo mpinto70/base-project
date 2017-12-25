@@ -19,10 +19,10 @@ set(CMAKE_CXX_FLAGS "-Werror \
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/gtest/src/gtest/googletest/include"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/gtest/src/gtest/googlemock/include"
-                    )
+include_directories(
+    "${CMAKE_CURRENT_SOURCE_DIR}/src"
+    "$ENV{BOOST_ROOT}/include"
+)
 
 ################################################################################
 # Google Test Setup - BEGIN ####################################################
