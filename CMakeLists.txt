@@ -19,9 +19,12 @@ set(CMAKE_CXX_FLAGS "-Werror \
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
+find_package(Boost 1.65 REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+link_directories(${Boost_LIBRARY_DIRS})
+
 include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}/src"
-    "$ENV{BOOST_ROOT}/include"
 )
 
 ################################################################################
@@ -94,6 +97,7 @@ function(add_unit_test testname sources_var libs_var)
         ${${libs_var}}
         libgtest
         libgmock
+        ${Boost_LIBRARIES}
     )
 
     add_test(NAME unit_${testname} COMMAND ${PROJECT_SOURCE_DIR}/bin/unit_${testname})
