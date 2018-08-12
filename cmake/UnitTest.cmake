@@ -46,12 +46,17 @@ set_target_properties(
 # Google Test Setup - END ######################################################
 ################################################################################
 
-function(add_unit_test testname sources_var libs_var)
+function(add_unit_test test_name sources_var libs_var)
+    set(unit_test_name unit_${test_name})
+
     add_executable(
-        unit_${testname}
+        ${unit_test_name}
         ${PROJECT_SOURCE_DIR}/test/gtest_main.cpp
         ${${sources_var}}
     )
+
+    add_dependencies(${unit_test_name} libgtest)
+    add_dependencies(${unit_test_name} libgmock)
 
     include_directories(
         "${PROJECT_SOURCE_DIR}/gtest/src/gtest/googletest/include"
@@ -59,17 +64,17 @@ function(add_unit_test testname sources_var libs_var)
     )
 
     set_target_properties(
-        unit_${testname}
+        ${unit_test_name}
         PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/test/bin
     )
 
     target_link_libraries(
-        unit_${testname}
+        ${unit_test_name}
         ${${libs_var}}
         libgtest
         libgmock
     )
 
-    add_test(NAME unit_${testname} COMMAND ${PROJECT_SOURCE_DIR}/test/bin/unit_${testname})
+    add_test(NAME ${unit_test_name} COMMAND ${PROJECT_SOURCE_DIR}/test/bin/${unit_test_name})
 endfunction(add_unit_test)
