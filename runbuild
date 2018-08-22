@@ -1,66 +1,71 @@
 #!/bin/bash
 
-check() {
+_check() {
     if [ $? -ne 0 ]; then
         echo "Error processing: $1"
         exit 1
     fi
 }
 
-do_build() {
+_do_build() {
     if [ ! -d "build" ]; then
         mkdir build
     fi
     cd build
     echo "Building ..."
     cmake ..
-    check "cmake"
+    _check "cmake"
     make -j8
-    check "make"
+    _check "make"
     cd ..
+}
+
+_clean() {
+    rm -rf \
+        build \
+        bin \
+        lib \
+        test/bin \
+
+}
+
+_distclean() {
+    _clean
+    rm -rf \
+        gtest \
+
 }
 
 if [ "$#" = "0" ]; then
     # With no parameter: build
-    do_build
+    _do_build
 elif [ "$1" = "clean" ]; then
-    rm -rf \
-        build \
-        bin \
-        lib \
-        test/bin \
-
+    _clean
     echo "Done."
 elif [ "$1" = "distclean" ]; then
-    rm -rf \
-        build \
-        bin \
-        lib \
-        gtest \
-        test/bin \
-
+    _distclean
     echo "Done."
 elif [ "$1" = "test" ]; then
-    do_build
+    _do_build
     shift
     echo "Testing... "
     for test in `ls test/bin/*`
     do
         $test "$@"
-        check "$test"
+        _check "$test"
     done
 elif [ "$1" = "ctest" ]; then
     shift
-    do_build
+    _do_build
     cd build
     ctest $@
-    check "ctest"
+    _check "ctest"
     cd ..
 elif [ "$1" = "demo" ]; then
-    do_build
+    _do_build
     echo "Nothing to demo yet"
 elif [ "$1" = "check" ]; then
-    do_build
+    _do_build
     cd build
     make cppcheck
 else
