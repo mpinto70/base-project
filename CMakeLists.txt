@@ -10,11 +10,14 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_CXX_FLAGS "-Werror \
+set(CMAKE_CXX_FLAGS " \
+    -Wno-parentheses \
+    -Werror \
     -Wall \
+    -Wextra \
+    -pedantic-errors \
     -O2 \
     -finline-functions \
-    -Wno-unused-local-typedefs \
     -D PROJECT_DIR=\"\\\"${CMAKE_SOURCE_DIR}\\\"\"")
 
 # set (CMAKE_VERBOSE_MAKEFILE on)
