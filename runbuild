@@ -63,7 +63,7 @@ elif [[ "$1" = "ctest" ]]; then
     cd ..
 elif [[ "$1" = "demo" ]]; then
     _do_build
-    echo "Nothing to demo yet"
+    ./bin/exe
 elif [[ "$1" = "check" ]]; then
     _do_build
     cd build
