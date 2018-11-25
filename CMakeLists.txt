@@ -1,6 +1,6 @@
 
-cmake_minimum_required (VERSION 2.8.11)
-project (PROJECT_NAME_GOES_HERE)
+cmake_minimum_required (VERSION 3.0)
+project (PROJECT_NAME_GOES_HERE VERSION 1.0.0 LANGUAGES CXX)
 
 # add support for CTest
 enable_testing()
