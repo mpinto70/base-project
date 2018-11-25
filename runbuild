@@ -1,14 +1,14 @@
 #!/bin/bash
 
 _check() {
-    if [ $? -ne 0 ]; then
+    if [[ $? -ne 0 ]]; then
         echo "Error processing: $1"
         exit 1
     fi
 }
 
 _do_build() {
-    if [ ! -d "build" ]; then
+    if [[ ! -d "build" ]]; then
         mkdir build
     fi
     cd build
@@ -36,16 +36,16 @@ _distclean() {
 
 }
 
-if [ "$#" = "0" ]; then
+if [[ "$#" = "0" ]]; then
     # With no parameter: build
     _do_build
-elif [ "$1" = "clean" ]; then
+elif [[ "$1" = "clean" ]]; then
     _clean
     echo "Done."
-elif [ "$1" = "distclean" ]; then
+elif [[ "$1" = "distclean" ]]; then
     _distclean
     echo "Done."
-elif [ "$1" = "test" ]; then
+elif [[ "$1" = "test" ]]; then
     _do_build
     shift
     echo "Testing... "
@@ -54,20 +54,20 @@ elif [ "$1" = "test" ]; then
         $test "$@"
         _check "$test"
     done
-elif [ "$1" = "ctest" ]; then
+elif [[ "$1" = "ctest" ]]; then
     shift
     _do_build
     cd build
     ctest $@
     _check "ctest"
     cd ..
-elif [ "$1" = "demo" ]; then
+elif [[ "$1" = "demo" ]]; then
     _do_build
     echo "Nothing to demo yet"
-elif [ "$1" = "check" ]; then
+elif [[ "$1" = "check" ]]; then
     _do_build
     cd build
     make cppcheck
 else
-    echo "Usage: `basename $0` [test|clean|distclean|demo|check]"
+    echo "Usage: `basename $0` [test|ctest|clean|distclean|demo|check]"
 fi
