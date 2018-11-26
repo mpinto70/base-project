@@ -26,13 +26,8 @@ _clean() {
         bin \
         lib \
         test/bin \
-
-}
-
-_distclean() {
-    _clean
-    rm -rf \
-        gtest \
+        test/lib \
+        mck/lib \
 
 }
 
@@ -41,9 +36,6 @@ if [[ "$#" = "0" ]]; then
     _do_build
 elif [[ "$1" = "clean" ]]; then
     _clean
-    echo "Done."
-elif [[ "$1" = "distclean" ]]; then
-    _distclean
     echo "Done."
 elif [[ "$1" = "test" ]]; then
     _do_build
@@ -69,5 +61,5 @@ elif [[ "$1" = "check" ]]; then
     cd build
     make cppcheck
 else
-    echo "Usage: `basename $0` [test|ctest|clean|distclean|demo|check]"
+    echo "Usage: `basename $0` [test|ctest|clean|demo|check]"
 fi

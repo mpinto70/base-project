@@ -39,3 +39,37 @@ function(add_unit_test test_name sources_var libs_var)
 
     add_test(NAME ${unit_test_name} COMMAND ${PROJECT_SOURCE_DIR}/test/bin/${unit_test_name})
 endfunction(add_unit_test)
+
+function(_add_lib lib_name sources_var directory)
+    add_library(
+        ${lib_name}
+        ${${sources_var}}
+    )
+
+    target_include_directories(
+        ${lib_name}
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+
+    set_target_properties(
+        ${lib_name}
+        PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/${directory}/lib
+    )
+endfunction(_add_lib)
+
+function(add_test_lib test_lib_name sources_var)
+    _add_lib(
+        ${test_lib_name}
+        ${sources_var}
+        test
+    )
+endfunction(add_test_lib)
+
+function(add_mock_lib mck_lib_name sources_var)
+    _add_lib(
+        ${mck_lib_name}
+        ${sources_var}
+        mck
+    )
+endfunction(add_mock_lib)

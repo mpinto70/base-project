@@ -1,10 +1,9 @@
-
-add_library(
-    mck_dir
+set(dir_srcs
     fileMock.cpp
 )
 
-target_include_directories(
+add_mock_lib(
     mck_dir
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+    dir_srcs
 )
+
