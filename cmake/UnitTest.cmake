@@ -20,7 +20,6 @@ function(add_unit_test test_name sources_var libs_var)
 
     add_executable(
         ${unit_test_name}
-        ${PROJECT_SOURCE_DIR}/test/gtest_main.cpp
         ${${sources_var}}
     )
 
