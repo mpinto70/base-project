@@ -31,9 +31,8 @@ function(add_unit_test test_name sources_var libs_var)
 
     target_link_libraries(
         ${unit_test_name}
-        ${${libs_var}}
-        gtest
-        gmock_main
+        PUBLIC ${${libs_var}}
+        PRIVATE gtest gmock_main
     )
 
     add_test(NAME ${unit_test_name} COMMAND ${PROJECT_SOURCE_DIR}/test/bin/${unit_test_name})
@@ -48,8 +47,8 @@ function(_add_lib lib_name sources_var directory)
     target_include_directories(
         ${lib_name}
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-        PUBLIC ${gtest_SOURCE_DIR}/include
-        PUBLIC ${gmock_SOURCE_DIR}/include
+        PRIVATE ${gtest_SOURCE_DIR}/include
+        PRIVATE ${gmock_SOURCE_DIR}/include
     )
 
     set_target_properties(
