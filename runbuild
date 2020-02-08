@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
 _check() {
     if [[ $? -ne 0 ]]; then
         echo "Error processing: $1"
@@ -9,18 +11,19 @@ _check() {
 
 _do_build() {
     if [[ ! -d "build" ]]; then
-        mkdir build
+        mkdir ${SCRIPT_DIR}/build
     fi
-    cd build
+    cd ${SCRIPT_DIR}/build || _check "cd to build"
     echo "Building ..."
     cmake ..
     _check "cmake"
     make -j8
     _check "make"
-    cd ..
+    cd - || _check "cd back"
 }
 
 _clean() {
+    cd ${SCRIPT_DIR} || _check "cd to root"
     rm -rf \
         build \
         bin \
@@ -29,6 +32,12 @@ _clean() {
         test/lib \
         mck/lib \
 
+    cd - || _check "cd back"
+}
+
+_demo() {
+    echo "Put your demo here"
+    ${SCRIPT_DIR}/bin/exe
 }
 
 if [[ "$#" = "0" ]]; then
@@ -41,7 +50,7 @@ elif [[ "$1" = "test" ]]; then
     _do_build
     shift
     echo "Testing... "
-    for test in `ls test/bin/*`
+    for test in "${SCRIPT_DIR}"/test/bin/*
     do
         $test "$@"
         _check "$test"
@@ -49,16 +58,16 @@ elif [[ "$1" = "test" ]]; then
 elif [[ "$1" = "ctest" ]]; then
     shift
     _do_build
-    cd build
-    ctest $@
+    cd ${SCRIPT_DIR}/build || _check "cd to build"
+    ctest "$@"
     _check "ctest"
-    cd ..
+    cd - || _check "cd back"
 elif [[ "$1" = "demo" ]]; then
     _do_build
-    ./bin/exe
+    _demo
 elif [[ "$1" = "check" ]]; then
     _do_build
-    cd build
+    cd ${SCRIPT_DIR}/build || _check "cd to build"
     make cppcheck
 else
     echo "Usage: `basename $0` [test|ctest|clean|demo|check]"
