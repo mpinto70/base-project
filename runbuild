@@ -26,11 +26,7 @@ _clean() {
     cd ${SCRIPT_DIR} || _check "cd to root"
     rm -rf \
         build \
-        bin \
-        lib \
-        test/bin \
-        test/lib \
-        mck/lib \
+        external \
 
     cd - || _check "cd back"
 }
@@ -50,7 +46,7 @@ elif [[ "$1" = "test" ]]; then
     _do_build
     shift
     echo "Testing... "
-    for test in "${SCRIPT_DIR}"/test/bin/*
+    for test in "${SCRIPT_DIR}"/build/test/bin/*
     do
         $test "$@"
         _check "$test"
