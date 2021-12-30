@@ -6,8 +6,6 @@ include(CTest)
 include(FetchContent)
 include(ExternalProject)
 
-set(EXTERNAL_INSTALL_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/external)
-
 set(UPDATE_DISCONNECTED_IF_AVAILABLE "UPDATE_DISCONNECTED 1")
 
 find_program(CCACHE_FOUND ccache)
