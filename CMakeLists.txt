@@ -40,7 +40,7 @@ set(BRASA_DIR ${CMAKE_BINARY_DIR}/brasa)
 
 ExternalProject_Add(libbrasa
         GIT_REPOSITORY https://github.com/mpinto70/libbrasa.git
-        GIT_TAG        v0.10
+        GIT_TAG        v0.14
         PREFIX ${BRASA_DIR}
         INSTALL_COMMAND
         make
